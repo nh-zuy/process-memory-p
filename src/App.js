@@ -44,7 +44,7 @@ function App() {
 					<Route path="/home" element={<HomePage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
-					<Route path="/schedule/:id" element={<SchedulePage />} />
+					<Route path="/schedule/:computerId/:id" element={<SchedulePage />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

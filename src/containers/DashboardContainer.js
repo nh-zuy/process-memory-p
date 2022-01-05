@@ -5,7 +5,7 @@ import { getDatabase, ref, onValue, remove } from "firebase/database";
 import firebase from "./../firebase";
 
 function DashboardContainer() {
-    const [schedules, setSchedules] = useState({});
+    const [schedules, setSchedules] = useState([]);
     const [computerId, setComputerId] = useState(null);
 
     useEffect(() => {
@@ -22,9 +22,9 @@ function DashboardContainer() {
         });
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = (computerID, index) => {
         const db = getDatabase(firebase);
-        const starCountRef = ref(db, 'schedules/' + id);
+        const starCountRef = ref(db, 'schedules/' + computerID + "/" + index);
         remove(starCountRef);
     }
 
@@ -61,33 +61,35 @@ function DashboardContainer() {
                 </thead>
 
                 <tbody>
-                    {schedules && <tr key={1} >
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            {schedules.f}
-                        </td>
-                        <td>
-                            {schedules.t}
-                        </td>
-                        <td>
-                            {schedules.d}
-                        </td>
-                        <td>
-                            {schedules.i}
-                        </td>
-                        <td>
-                            {schedules.s}
-                        </td>
-                        <td>
-                            <a className="mr-5 btn btn-warning" href={"/schedule/" + computerId}>Cập nhật</a>
-                            <Button className="ml-5 btn btn-danger" onClick={() => handleDelete(computerId)}>Xóa</Button>
-                        </td>
-                    </tr>}
+                    {schedules && schedules.map((schedule, index) => (
+                        <tr key={index} >
+                            <th scope="row">
+                                {index}
+                            </th>
+                            <td>
+                                {index}
+                            </td>
+                            <td>
+                                {schedule.f}
+                            </td>
+                            <td>
+                                {schedule.t}
+                            </td>
+                            <td>
+                                {schedule.d}
+                            </td>
+                            <td>
+                                {schedule.i}
+                            </td>
+                            <td>
+                                {schedule.s}
+                            </td>
+                            <td>
+                                <a className="mr-5 btn btn-warning" href={"/schedule/" + computerId + "/" + index}>Cập nhật</a>
+                                <Button className="ml-5 btn btn-danger" onClick={() => handleDelete(computerId, index)}>Xóa</Button>
+                            </td>
+                        </tr>
+                    ))}
 
                 </tbody>
             </Table>

@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import { FormGroup, Label, Input, Form, FormText, Button } from "reactstrap";
 
 import { getDatabase, ref, set, onValue} from "firebase/database";
 import firebase from "./../firebase";
 
 function ScheduleContainer(props) {
+    const {computerId, id} = useParams();
     const [schedule, setSchedule] = useState({});
 
     useEffect(() => {
         const db = getDatabase(firebase);
-        const starCountRef = ref(db, 'schedules/' + props.id);
+        const starCountRef = ref(db, 'schedules/' + computerId + "/" + id);
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
             setSchedule(data);
             console.log(data);
         });
-    }, [props.id])
+    }, [])
 
     const handleInputChange = (event) => {
         const key = event.target.id;
@@ -44,7 +46,7 @@ function ScheduleContainer(props) {
 
     const handleSubmit = () => {
         const db = getDatabase(firebase);
-        const starCountRef = ref(db, 'schedules/' + props.id);
+        const starCountRef = ref(db, 'schedules/' + computerId + "/" + id);
         set(starCountRef, schedule);
         alert("Cập nhật thành công.");
     }
