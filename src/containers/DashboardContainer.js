@@ -5,8 +5,17 @@ import { getDatabase, ref, onValue, remove } from "firebase/database";
 import firebase from "./../firebase";
 
 function DashboardContainer() {
-    const [schedules, setSchedules] = useState([]);
+    const [schedules, setSchedules] = useState({});
     const [computerId, setComputerId] = useState(null);
+
+    function objectToArray(obj) {
+        const keys = Object.keys(obj);
+        const map = new Map();
+        for(let i = 0; i < keys.length; i++){
+           map.set(keys[i], obj[keys[i]]);
+        };
+        return Array.from(map, ([index, value]) => ({index, value}));
+     };
 
     useEffect(() => {
         const login = JSON.parse(localStorage.getItem('login'));
@@ -18,7 +27,7 @@ function DashboardContainer() {
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
             setSchedules(data);
-            console.log(data);
+            console.log(objectToArray(data));
         });
     }, []);
 
@@ -30,16 +39,13 @@ function DashboardContainer() {
 
     return (
         <Fragment>
-            <h1 className="text-center ">Danh sách các máy quản lí.</h1>
-
+            <h1 className="text-center ">Khung Giờ Sử Dụng Máy Tính</h1>
+            <a className="ml-5 btn btn-success" href={"/schedules/" + computerId + "/add"}>Thêm khung giờ</a>
             <Table responsive>
                 <thead>
                     <tr>
                         <th>
                             ID
-                        </th>
-                        <th>
-                            Máy
                         </th>
                         <th>
                             Giờ bắt đầu
@@ -61,32 +67,29 @@ function DashboardContainer() {
                 </thead>
 
                 <tbody>
-                    {schedules && schedules.map((schedule, index) => (
+                    {schedules && objectToArray(schedules).map((schedule, index) => (
                         <tr key={index} >
                             <th scope="row">
                                 {index}
                             </th>
                             <td>
-                                {index}
+                                {schedule.value.f}
                             </td>
                             <td>
-                                {schedule.f}
+                                {schedule.value.t}
                             </td>
                             <td>
-                                {schedule.t}
+                                {schedule.value.d}
                             </td>
                             <td>
-                                {schedule.d}
+                                {schedule.value.i}
                             </td>
                             <td>
-                                {schedule.i}
+                                {schedule.value.s}
                             </td>
                             <td>
-                                {schedule.s}
-                            </td>
-                            <td>
-                                <a className="mr-5 btn btn-warning" href={"/schedule/" + computerId + "/" + index}>Cập nhật</a>
-                                <Button className="ml-5 btn btn-danger" onClick={() => handleDelete(computerId, index)}>Xóa</Button>
+                                <a className="mr-5 btn btn-warning" href={"/schedule/" + computerId + "/" + schedule.index}>Cập nhật</a>
+                                <Button className="ml-5 btn btn-danger" onClick={() => handleDelete(computerId, schedule.index)}>Xóa</Button>
                             </td>
                         </tr>
                     ))}

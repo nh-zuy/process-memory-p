@@ -15,15 +15,16 @@ function Header({logout}) {
 					<NavbarToggler onClick={function noRefCheck() { }} />
 					<Collapse navbar>
 						<Nav className="me-auto" navbar>
-							<NavItem>
-								<NavLink href="/home">
-									Trang chủ
-								</NavLink>
-							</NavItem>
 
 							<NavItem>
 								<NavLink href="/about">
 									Giới thiệu
+								</NavLink>
+							</NavItem>
+							
+							<NavItem>
+								<NavLink href="/home">
+									Hướng dẫn sử dụng
 								</NavLink>
 							</NavItem>
 

@@ -8,6 +8,7 @@ import ContactPage from "./pages/ContactPage";
 import DashboardPage from "./pages/DashboardPage";
 import SchedulePage from './pages/SchedulePage';
 import LoginPage from './pages/LoginPage';
+import AddSchedulePage from './pages/AddSchedulePage';
 import { useState } from 'react';
 
 function App() {
@@ -44,7 +45,9 @@ function App() {
 					<Route path="/home" element={<HomePage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
+					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/schedule/:computerId/:id" element={<SchedulePage />} />
+					<Route path="/schedules/:computerId/add" element={<AddSchedulePage />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
