@@ -6,7 +6,9 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import DashboardPage from "./pages/DashboardPage";
+import ImagePage from './pages/ImagePage';
 import SchedulePage from './pages/SchedulePage';
+import ImageGridPage from './pages/ImageGridPage';
 import LoginPage from './pages/LoginPage';
 import AddSchedulePage from './pages/AddSchedulePage';
 import { useState } from 'react';
@@ -42,6 +44,8 @@ function App() {
 				<Routes>
 					<Route path="/" exact />
 					<Route path="/dashboard/" element={<DashboardPage />} />
+					<Route path="/images/" element={<ImagePage />} />
+					<Route path="/images/:computerId/:id" element={<ImageGridPage />} />
 					<Route path="/home" element={<HomePage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
